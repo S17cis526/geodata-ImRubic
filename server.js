@@ -1,7 +1,7 @@
 "use strict;"
 
 // The port to serve on
-const PORT = 3000;
+const PORT = 3100;
 
 // global variables
 var fs = require('fs');
@@ -33,13 +33,23 @@ function serveFile(file, type, req, res) {
   });
 }
 
+function addLocation(req, res) {
+  var url require('url').parse(req.url);
+  var qs = require('qs').parse(url.query);
+  var address = qs.address;
+  //Perform geolocations with address
+  
+}
+
 /** @function handleRequest
  * Handles incoming http requests
  * @param {http.incomingRequest} req - the request object
  * @param {http.serverResponse} res - the response object
  */
 function handleRequest(req, res) {
-  switch(req.url) {
+  var url = require('url').parse(req.url);
+
+  switch(url.pathname) {
     // Serving static files
     case '/':
     case '/index.html':
@@ -62,6 +72,9 @@ function handleRequest(req, res) {
     case '/united-states.json':
       serveFile('data/united-states.json', 'application/json', req, res);
       break;
+    case '/add-location':
+      addLocation(req, res);
+      brea;
 
     // Serve error code
     default:
